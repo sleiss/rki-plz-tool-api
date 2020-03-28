@@ -1,0 +1,95 @@
+openapi: 3.0.0
+info:
+  title: PLZ-Tool API
+  description: API for the PLZ-Tool of the RKI
+  contact:
+    email: me@sleiss.me
+  license:
+    name: GNU GPLv3
+    url: https://choosealicense.com/licenses/gpl-3.0/
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/sleiss/RKI-PLZ-Tool-API/1.0.0
+tags:
+- name: authorities
+  description: Calls regarding authorities
+paths:
+  /authority:
+    get:
+      tags:
+      - authorities
+      summary: get authority for given PLZ
+      description: "Find the according authority for the given PLZ \n"
+      operationId: getAuthority
+      parameters:
+      - name: plz
+        in: query
+        description: the PLZ for which the authority should be found
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorityItem'
+        "400":
+          description: bad PLZ
+      x-swagger-router-controller: Authorities
+components:
+  schemas:
+    AuthorityItem:
+      required:
+      - city
+      - email
+      - fax
+      - id
+      - name
+      - phone
+      - plz
+      - region
+      - street
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1.09.1.62.
+        region:
+          type: string
+          example: Landeshauptstadt München
+        name:
+          type: string
+          example: Referat für Gesundheit und Umwelt
+        street:
+          type: string
+          example: Bayerstraße 28a
+        plz:
+          type: string
+          example: "80335"
+        city:
+          type: string
+          example: München
+        email:
+          type: string
+          format: email
+          example: gs-is-mw.rgu@muenchen.de
+        phone:
+          type: string
+          example: 089 233-96300
+        fax:
+          type: string
+          example: 089 233-47814
+      example:
+        city: München
+        phone: 089 233-96300
+        street: Bayerstraße 28a
+        name: Referat für Gesundheit und Umwelt
+        id: 1.09.1.62.
+        region: Landeshauptstadt München
+        fax: 089 233-47814
+        email: gs-is-mw.rgu@muenchen.de
+        plz: "80335"
