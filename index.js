@@ -6,6 +6,8 @@ var http = require('http');
 var oas3Tools = require('oas3-tools');
 var serverPort = 8080;
 
+var importService = require('./service/ImportService');
+
 // swaggerRouter configuration
 var options = {
     controllers: path.join(__dirname, './controllers')
@@ -14,6 +16,8 @@ var options = {
 var expressAppConfig = oas3Tools.expressAppConfig(path.join(__dirname, 'api/openapi.yaml'), options);
 expressAppConfig.addValidator();
 var app = expressAppConfig.getApp();
+
+importService.loadData();
 
 // Initialize the Swagger middleware
 http.createServer(app).listen(serverPort, function () {

@@ -9,7 +9,7 @@ info:
     url: https://choosealicense.com/licenses/gpl-3.0/
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/sleiss/RKI-PLZ-Tool-API/1.0.0
+- url: https://virtserver.swaggerhub.com/
 tags:
 - name: authorities
   description: Calls regarding authorities
@@ -30,6 +30,7 @@ paths:
         explode: true
         schema:
           type: string
+          example: "80335"
       responses:
         "200":
           description: search results matching criteria

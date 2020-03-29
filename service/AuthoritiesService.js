@@ -1,4 +1,5 @@
 'use strict';
+const database = require('../database');
 
 
 /**
@@ -10,23 +11,17 @@
  **/
 exports.getAuthority = function(plz) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "city" : "München",
-  "phone" : "089 233-96300",
-  "street" : "Bayerstraße 28a",
-  "name" : "Referat für Gesundheit und Umwelt",
-  "id" : "1.09.1.62.",
-  "region" : "Landeshauptstadt München",
-  "fax" : "089 233-47814",
-  "email" : "gs-is-mw.rgu@muenchen.de",
-  "plz" : "80335"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+    database.find_city_by_plz(plz).then(city => {
+        if (city === undefined || city === null) {
+            reject(`{"errorMessage": "No city found for given parameter plz (${plz})"}`);
+            return;
+        }
+        database.find_authority_by_id(city['GAKennzahl']).then( authority => {
+                delete authority['_id'];
+                resolve(authority);
+            }
+        )
+    });
   });
 }
 
