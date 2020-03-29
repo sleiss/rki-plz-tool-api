@@ -8,5 +8,5 @@ services:
       - database
   database:
     image: mongo
-    ports:
+    expose:
       - "27017"
