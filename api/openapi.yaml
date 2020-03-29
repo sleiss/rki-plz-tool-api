@@ -9,7 +9,7 @@ info:
     url: https://choosealicense.com/licenses/gpl-3.0/
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/
+- url: https://rki-plz-tool.sleiss.me/
 tags:
 - name: authorities
   description: Calls regarding authorities

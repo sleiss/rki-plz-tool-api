@@ -1,5 +1,10 @@
 # RKI-PLZ-Tool API
 
+To simply use the API without deploying it yourself, use: `https://rki-plz-tool.sleiss.me/authority?plz=PLZ`.\
+If you want to get the Gesundheitsamt for the zip-code 80331, you can use `https://rki-plz-tool.sleiss.me/authority?plz=80331`.\
+
+The documentation can be found here: `https://rki-plz-tool.sleiss.me/docs/`. Play around with it!
+
 ### Running the server
 To run the server, run:
 
