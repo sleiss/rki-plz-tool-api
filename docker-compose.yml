@@ -6,7 +6,9 @@ services:
       - "8080:8080"
     depends_on:
       - database
+    restart: unless-stopped
   database:
     image: mongo
     expose:
       - "27017"
+    restart: unless-stopped
