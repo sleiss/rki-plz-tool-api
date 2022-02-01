@@ -20,9 +20,9 @@ RUN mkdir data && \
     cd data && \
     wget https://www.rki.de/DE/Content/Infekt/IfSG/Software/Aktueller_Datenbestand.zip?__blob=publicationFile -O data.zip && \
     unzip data.zip && \
-    mv PlzGA.xml PlzGA.xml_tmp && \
-    dd if=PlzGA.xml_tmp of=PlzGA.xml bs=1 skip=2 && \
-    rm PlzGA.xml_tmp
+    mv TransmittingSiteSearchText.xml TransmittingSiteSearchText.xml_tmp && \
+    dd if=TransmittingSiteSearchText.xml_tmp of=TransmittingSiteSearchText.xml bs=1 skip=2 && \
+    rm TransmittingSiteSearchText.xml_tmp
 
 EXPOSE 8080
 

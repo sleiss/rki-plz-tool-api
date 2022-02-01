@@ -8,7 +8,7 @@ exports.clear_authorities = function () {
     return connection.then(() => {
         const db = client.db('plzTool');
         const coll = db.collection('authorities');
-        return coll.remove();
+        return coll.deleteMany();
     });
 };
 
@@ -16,7 +16,7 @@ exports.clear_cities = function () {
     return connection.then(() => {
         const db = client.db('plzTool');
         const coll = db.collection('cities');
-        return coll.remove();
+        return coll.deleteMany();
     });
 };
 

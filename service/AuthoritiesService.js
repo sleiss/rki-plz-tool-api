@@ -16,7 +16,7 @@ exports.getAuthority = function(plz) {
             reject(`{"errorMessage": "No city found for given parameter plz (${plz})"}`);
             return;
         }
-        database.find_authority_by_id(city['GAKennzahl']).then( authority => {
+        database.find_authority_by_id(city.tsId).then( authority => {
                 delete authority['_id'];
                 resolve(authority);
             }

@@ -4,7 +4,6 @@
   "description": "API for the PLZ-Tool of the RKI",
   "main": "index.js",
   "scripts": {
-    "prestart": "npm install",
     "start": "node index.js"
   },
   "keywords": [

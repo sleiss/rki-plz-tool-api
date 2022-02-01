@@ -8,21 +8,22 @@ exports.loadData = function() {
     database.clear_authorities();
     database.clear_cities();
 
-    const xmlData = bufferFile('../data/PlzGA.xml');
+    const xmlData = bufferFile('../data/TransmittingSiteSearchText.xml');
     const jsonData = JSON.parse(parser.toJson(xmlData));
 
-    for (let ga_Id in jsonData['PlzGA']['GA']) {
-        let GA = jsonData['PlzGA']['GA'][ga_Id];
-        GA = transformGA(GA);
+    for (let transmittingSite of jsonData['TransmittingSites']['TransmittingSite']) {
+        const ts = transformTransmittingSite(transmittingSite);
 
-        database.add_authority(GA);
-    }
+        database.find_authority_by_id(ts.id).then(res => {
+            if (!res) {
+                database.add_authority(ts);
+            }
+        });
 
-    for (let city_Id in jsonData['PlzGA']['PLZGa']) {
-        let city = jsonData['PlzGA']['PLZGa'][city_Id];
-        city = transformCity(city);
-
-        database.add_city(city);
+        const plzs = getPlzsForCity(transmittingSite, ts);
+        for (const plz of plzs) {
+            database.add_city(plz);
+        }
     }
 
     console.log('Imported all entries!');
@@ -58,8 +59,47 @@ function transformGA(GA) {
     return GA;
 }
 
+function transformTransmittingSite(transmittingSite) {
+    const output = {};
+    output.place = transmittingSite.Place;
+    output.phone = transmittingSite.Phone;
+    output.department = transmittingSite.Department;
+    output.id = transmittingSite.Code;
+    output.region = transmittingSite.Name;
+    output.fax = transmittingSite.Fax;
+    output.email = transmittingSite.Email;
+    output.plz = transmittingSite.Postalcode;
+    output.street = transmittingSite.Street;
+
+    return output;
+}
+
+function getPlzsForCity(transmittingSiteRaw, transmittingSite) {
+    const output = [];
+    if (!transmittingSiteRaw.SearchText || !isIterable(transmittingSiteRaw.SearchText)) {
+        return [];
+    }
+    for (const entry of transmittingSiteRaw.SearchText) {
+        const parsedNumber = Number.parseInt(entry.Value);
+        if (parsedNumber && parsedNumber !== '') {
+            output.push({PLZ: entry.Value, tsId: transmittingSite.id});
+        }
+    }
+
+    return output;
+}
+
 function transformCity(city) {
     delete city['xmlns'];
 
     return city;
+}
+
+// https://stackoverflow.com/a/32538867/3802758
+function isIterable(obj) {
+    // checks for null and undefined
+    if (obj == null) {
+        return false;
+    }
+    return typeof obj[Symbol.iterator] === 'function';
 }

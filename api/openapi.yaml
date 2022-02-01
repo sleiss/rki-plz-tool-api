@@ -62,7 +62,7 @@ components:
         region:
           type: string
           example: Landeshauptstadt München
-        name:
+        department:
           type: string
           example: Referat für Gesundheit und Umwelt
         street:
@@ -71,7 +71,7 @@ components:
         plz:
           type: string
           example: "80335"
-        city:
+        place:
           type: string
           example: München
         email:
@@ -85,10 +85,10 @@ components:
           type: string
           example: 089 233-47814
       example:
-        city: München
+        place: München
         phone: 089 233-96300
+        department: Referat für Gesundheit und Umwelt
         street: Bayerstraße 28a
-        name: Referat für Gesundheit und Umwelt
         id: 1.09.1.62.
         region: Landeshauptstadt München
         fax: 089 233-47814
